@@ -2,9 +2,9 @@ const { AuthenticationError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    tasks: (parent, args, { user, models }) => {
+    tasks: (parent, { limit = null, offset = null }, { user, models }) => {
       if (!user) throw new AuthenticationError('User not authenticated');
-      return models.Task.all();
+      return models.Task.findAll({ limit, offset });
     },
     task: (parent, { id }, { user, models }) => {
       if (!user) throw new AuthenticationError('User not authenticated');
@@ -21,7 +21,7 @@ module.exports = {
         userId: user.id,
       };
       const result = await models.Task.create(task);
-     
+
       return result;
     },
   },

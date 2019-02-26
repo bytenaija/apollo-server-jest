@@ -29,7 +29,7 @@ module.exports = gql`
   }
   type Query {
     me: User
-    tasks: [Task]
+    tasks(limit: Int, offset: Int): [Task]
     task(id: ID!): Task
   }
 
